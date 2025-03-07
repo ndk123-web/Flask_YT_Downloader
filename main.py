@@ -3,17 +3,13 @@ from flask import Flask, request, render_template, url_for, send_file, make_resp
 import yt_dlp  # For downloading YouTube videos
 from flask_wtf import CSRFProtect  # For CSRF protection in forms
 import os  # For creating directories and file handling
-from dotenv import load_dotenv  # For loading environment variables
-
-# Load environment variables from .env file
-load_dotenv()
 
 # Initialize Flask application
 app = Flask(__name__)
 
 # Enable CSRF protection for security
 csrf = CSRFProtect(app)
-app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')  # Get secret key from environment variable
+app.config['SECRET_KEY'] = '123414j1kb41bj4bk'  # Secret key for sessions & CSRF
 
 # Function to render home page
 def home_Page_For_User():
@@ -39,29 +35,6 @@ def download_Video_On_User_Browser():
                 'no_warnings': True,          # don't show warnings
                 'noplaylist': True,          # don't download playlists, only single videos
                 'outtmpl': f'{temp_dir}/%(title)s.%(ext)s',  # output where mp3 file will be stored
-                'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                'extract_flat': True,
-                'no_check_certificate': True,
-                'ignoreerrors': True,
-                'no_warnings': True,
-                'quiet': True,
-                'extract_audio': True,
-                'audio_format': 'mp3',
-                'audio_quality': 0,  # Best quality
-                'postprocessors': [{
-                    'key': 'FFmpegExtractAudio',
-                    'preferredcodec': 'mp3',
-                    'preferredquality': '192',
-                }],
-                'geo_verification_proxy': '',  # Use proxy if needed
-                'socket_timeout': 30,  # Increase timeout
-                'retries': 10,  # Number of retries
-                'fragment_retries': 10,
-                'file_access_retries': 10,
-                'extractor_retries': 10,
-                'ignoreerrors': True,
-                'no_warnings': True,
-                'quiet': True,
             }
             
             # Download audio using yt-dlp
@@ -72,9 +45,9 @@ def download_Video_On_User_Browser():
             # Send file to user browser for download
             return send_file(
                 downloaded_file, # sending mp3 file to user browser
-                as_attachment=True, # force browser to download it
-                download_name=f"{info['title']}.mp3",  # name shown in browser
-                mimetype='audio/mp3' # mime type for the file
+                as_attachment=True,
+                download_name=f"{info['title']}.mp3",  
+                mimetype='audio/mp3'
             )
             
         except Exception as e:
