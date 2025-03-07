@@ -39,7 +39,6 @@ def download_Video_On_User_Browser():
                 'no_warnings': True,          # don't show warnings
                 'noplaylist': True,          # don't download playlists, only single videos
                 'outtmpl': f'{temp_dir}/%(title)s.%(ext)s',  # output where mp3 file will be stored
-                'cookiesfrombrowser': ('chrome',),  # Use Chrome cookies
                 'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
                 'extract_flat': True,
                 'no_check_certificate': True,
@@ -49,6 +48,20 @@ def download_Video_On_User_Browser():
                 'extract_audio': True,
                 'audio_format': 'mp3',
                 'audio_quality': 0,  # Best quality
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                }],
+                'geo_verification_proxy': '',  # Use proxy if needed
+                'socket_timeout': 30,  # Increase timeout
+                'retries': 10,  # Number of retries
+                'fragment_retries': 10,
+                'file_access_retries': 10,
+                'extractor_retries': 10,
+                'ignoreerrors': True,
+                'no_warnings': True,
+                'quiet': True,
             }
             
             # Download audio using yt-dlp
