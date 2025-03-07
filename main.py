@@ -30,10 +30,10 @@ def download_Video_On_User_Browser():
 
             # yt-dlp options for downloading best quality audio
             ydl_opts = {
-                'format': 'bestaudio/best',  # gives best audio quality
-                'quiet': True,               # don't show download progress
-                'no_warnings': True,          # don't show warnings
-                'noplaylist': True,          # don't download playlists, only single videos
+                'format': 'bestaudio/best',                  # gives best audio quality
+                'quiet': True,                               # don't show download progress
+                'no_warnings': True,                         # don't show warnings
+                'noplaylist': True,                          # don't download playlists, only single videos
                 'outtmpl': f'{temp_dir}/%(title)s.%(ext)s',  # output where mp3 file will be stored
             }
             
@@ -44,10 +44,10 @@ def download_Video_On_User_Browser():
             
             # Send file to user browser for download
             return send_file(
-                downloaded_file, # sending mp3 file to user browser
-                as_attachment=True,
-                download_name=f"{info['title']}.mp3",  
-                mimetype='audio/mp3'
+                downloaded_file,                        # sending mp3 file to user browser
+                as_attachment=True,                     # force browser to download it                        
+                download_name=f"{info['title']}.mp3",   # name shown in browser
+                mimetype='audio/mp3'                    # mime type for the file
             )
             
         except Exception as e:
