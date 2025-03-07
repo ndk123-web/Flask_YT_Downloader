@@ -3,13 +3,15 @@ from flask import Flask, request, render_template, url_for, send_file, make_resp
 import yt_dlp  # For downloading YouTube videos
 from flask_wtf import CSRFProtect  # For CSRF protection in forms
 import os  # For creating directories and file handling
+import dotenv
 
+dotenv.load_dotenv()
 # Initialize Flask application
 app = Flask(__name__)
 
 # Enable CSRF protection for security
 csrf = CSRFProtect(app)
-app.config['SECRET_KEY'] = '123414j1kb41bj4bk'  # Secret key for sessions & CSRF
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')  # Secret key for sessions & CSRF
 
 # Function to render home page
 def home_Page_For_User():
